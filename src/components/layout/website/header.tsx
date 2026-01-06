@@ -10,6 +10,7 @@ import {
   NavbarItem
 } from '@heroui/navbar'
 import { ThemeSwitcher } from '../../custom/theme-switcher'
+import { ROUTES } from '@/constants/routes'
 
 export const AcmeLogo = () => {
   return (
@@ -75,7 +76,7 @@ export default function Header() {
 
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
-          <Link href='#'>Login</Link>
+          <Link href={ROUTES.DASHBOARD}>Login</Link>
         </NavbarItem>
         <NavbarItem>
           <Button as={Link} color='warning' href='#' variant='flat'>
