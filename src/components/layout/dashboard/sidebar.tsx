@@ -1,24 +1,26 @@
 'use client'
 
 // ** React and Core Library Imports
-import { createContext, ReactNode, useContext, useState } from 'react'
+import React, { createContext, ReactNode, useContext, useState } from 'react'
 
 // ** Next.js and Internationalization Imports
+import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 // ** UI Library Imports
 import { Avatar } from '@heroui/avatar'
 import { Button } from '@heroui/button'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { cn } from '@heroui/theme'
 
 // ** Third-Party Library Imports
-import { ChevronLeft, ChevronRight, Home, LogOut, Menu } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Home, LogOut, Menu, Moon, Sun, User } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 // ** Custom Component Imports
-import { ThemeSwitcher } from '@/components/custom/theme-switcher'
+import { ROUTES } from '@/constants/routes'
 import { MENU_ITEMS } from '@/data/menu-data'
 
 // -- Context --
@@ -112,6 +114,21 @@ function SidebarContent({
   toggleCollapse?: () => void
   onItemClick?: () => void
 }) {
+  const { theme, setTheme } = useTheme()
+  const router = useRouter()
+
+  const handleAction = (key: React.Key) => {
+    if (key === 'profile') {
+      router.push(ROUTES.PROFILE)
+      if (onItemClick) onItemClick()
+    } else if (key === 'theme') {
+      setTheme(theme === 'dark' ? 'light' : 'dark')
+    } else if (key === 'logout') {
+      // Handle Logout Logic
+      console.log('Logging out...')
+    }
+  }
+
   return (
     <div className='bg-sidebar text-sidebar-foreground relative flex h-full w-full flex-col'>
       {/* Background Noise used for texture */}
@@ -177,6 +194,7 @@ function SidebarContent({
                           'group relative flex min-h-[36px] cursor-pointer items-center transition-all duration-200',
                           collapsed ? 'mx-auto w-9 justify-center rounded-lg' : 'mx-1 rounded-md px-3',
 
+                          // Hover state (only if not active to avoid conflict with layoutId bg)
                           !isActive &&
                             'hover:bg-sidebar-accent/50 text-sidebar-foreground/70 hover:text-sidebar-accent-foreground'
                         )}
@@ -239,65 +257,66 @@ function SidebarContent({
         </div>
       </ScrollShadow>
 
-      {/* Footer / User Profile & Theme Switcher */}
+      {/* Footer / User Profile & Actions OLD */}
       <div className='border-sidebar-border/50 bg-sidebar/50 z-10 shrink-0 overflow-hidden border-t p-3 backdrop-blur-sm'>
-        <AnimatePresence>
-          {!collapsed && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className='mb-3 flex items-center justify-between px-1'
+        <Dropdown placement={collapsed ? 'right-end' : 'top-start'} offset={10}>
+          <DropdownTrigger>
+            <div
+              className={cn(
+                'border-sidebar-border/40 bg-sidebar-accent/10 hover:bg-sidebar-accent/20 flex cursor-pointer items-center gap-3 rounded-lg border p-1.5 transition-colors',
+                collapsed ? 'justify-center border-none bg-transparent p-1 hover:bg-transparent' : ''
+              )}
             >
-              <span className='text-sidebar-foreground/50 text-[10px] font-medium tracking-wider uppercase'>Theme</span>
-              <div className='origin-right scale-75'>
-                <ThemeSwitcher />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              <Avatar
+                isBordered
+                size='sm'
+                src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                className={cn('ring-sidebar h-7 w-7 shrink-0 ring-2', collapsed ? 'h-8 w-8' : '')}
+              />
 
-        {collapsed && (
-          <div className='mb-3 flex justify-center'>
-            <div className='scale-75'>
-              <ThemeSwitcher />
+              <AnimatePresence>
+                {!collapsed && (
+                  <motion.div
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: 'auto' }}
+                    exit={{ opacity: 0, width: 0 }}
+                    className='ml-1 flex flex-col overflow-hidden text-left'
+                  >
+                    <span className='truncate text-xs font-bold'>Jane Doe</span>
+                    <span className='text-sidebar-foreground/60 truncate text-[10px]'>jane@acme.com</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {!collapsed && (
+                <div className='text-sidebar-foreground/50 ml-auto'>
+                  <ChevronRight size={16} />
+                </div>
+              )}
             </div>
-          </div>
-        )}
-
-        <div
-          className={cn(
-            'border-sidebar-border/40 bg-sidebar-accent/10 hover:bg-sidebar-accent/20 flex cursor-pointer items-center gap-3 rounded-lg border p-1.5 transition-colors',
-            collapsed ? 'justify-center border-none bg-transparent p-1 hover:bg-transparent' : ''
-          )}
-        >
-          <Avatar
-            isBordered
-            size='sm'
-            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
-            className={cn('ring-sidebar h-7 w-7 shrink-0 ring-2', collapsed ? 'h-8 w-8' : '')}
-          />
-
-          <AnimatePresence>
-            {!collapsed && (
-              <motion.div
-                initial={{ opacity: 0, width: 0 }}
-                animate={{ opacity: 1, width: 'auto' }}
-                exit={{ opacity: 0, width: 0 }}
-                className='ml-1 flex flex-col overflow-hidden'
-              >
-                <span className='truncate text-xs font-bold'>Jane Doe</span>
-                <span className='text-sidebar-foreground/60 truncate text-[10px]'>jane@acme.com</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {!collapsed && (
-            <Button isIconOnly variant='light' size='sm' className='text-sidebar-foreground/50 ml-auto'>
-              <LogOut size={16} />
-            </Button>
-          )}
-        </div>
+          </DropdownTrigger>
+          <DropdownMenu aria-label='User Actions' variant='flat' onAction={handleAction}>
+            <DropdownItem key='profile' startContent={<User size={16} />} textValue='Profile'>
+              Profile
+            </DropdownItem>
+            <DropdownItem
+              key='theme'
+              startContent={theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              textValue='Switch Theme'
+            >
+              Switch to {theme === 'dark' ? 'Light' : 'Dark'} Mode
+            </DropdownItem>
+            <DropdownItem
+              key='logout'
+              color='danger'
+              className='text-danger'
+              startContent={<LogOut size={16} />}
+              textValue='Logout'
+            >
+              Logout
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </div>
 
       {/* Desktop Collapse Toggle */}
