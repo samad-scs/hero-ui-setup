@@ -1,4 +1,3 @@
-import WebsiteLayout from '@/components/layout'
 import ServerProvider from '@/components/wrappers/server-providers'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
@@ -27,9 +26,7 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`} suppressHydrationWarning>
-        <ServerProvider>
-          <WebsiteLayout>{children}</WebsiteLayout>
-        </ServerProvider>
+        <ServerProvider>{children}</ServerProvider>
       </body>
     </html>
   )

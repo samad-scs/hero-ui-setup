@@ -1,3 +1,4 @@
+import FooterLayout from './footer'
 import Header from './header'
 
 const WebsiteLayout = ({ children }: { children: React.ReactNode }) => {
@@ -5,6 +6,7 @@ const WebsiteLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       {children}
+      <FooterLayout />
     </>
   )
 }

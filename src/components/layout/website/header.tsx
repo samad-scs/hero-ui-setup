@@ -9,7 +9,7 @@ import {
   NavbarContent,
   NavbarItem
 } from '@heroui/navbar'
-import { ThemeSwitcher } from '../custom/theme-switcher'
+import { ThemeSwitcher } from '../../custom/theme-switcher'
 
 export const AcmeLogo = () => {
   return (
@@ -82,7 +82,7 @@ export default function Header() {
             Sign Up
           </Button>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className='flex'>
           <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
