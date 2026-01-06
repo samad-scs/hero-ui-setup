@@ -1,7 +1,7 @@
 'use client'
 
 // ** React and Core Library Imports
-import React from 'react'
+import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 // ** Next.js and Internationalization Imports
 import { usePathname } from 'next/navigation'
@@ -24,40 +24,61 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
-  Users
+  Users,
+  Menu
 } from 'lucide-react'
 
 // ** Custom Component Imports
-// (None individually for now, using inline for simplicity or will extract if needed)
+import { ThemeSwitcher } from '@/components/custom/theme-switcher'
 
-export const SidebarContext = React.createContext<{
+// -- Context --
+interface SidebarContextProps {
   collapsed: boolean
   setCollapsed: (v: boolean) => void
-  isMobile: boolean
+  mobileOpen: boolean
   setMobileOpen: (v: boolean) => void
-}>({
+}
+
+const SidebarContext = createContext<SidebarContextProps>({
   collapsed: false,
   setCollapsed: () => {},
-  isMobile: false,
+  mobileOpen: false,
   setMobileOpen: () => {}
 })
 
-export function Sidebar({
-  className,
-  isMobile,
-  mobileOpen
-}: {
-  className?: string
-  isMobile?: boolean
-  mobileOpen?: boolean
-  setMobileOpen?: (open: boolean) => void
-}) {
-  const [collapsed, setCollapsed] = React.useState(false)
+export const useSidebar = () => useContext(SidebarContext)
+
+export const SidebarProvider = ({ children }: { children: ReactNode }) => {
+  const [collapsed, setCollapsed] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  return (
+    <SidebarContext.Provider value={{ collapsed, setCollapsed, mobileOpen, setMobileOpen }}>
+      {children}
+    </SidebarContext.Provider>
+  )
+}
+
+// -- Components --
+
+export const SidebarTrigger = ({ className }: { className?: string }) => {
+  const { setMobileOpen } = useSidebar()
+
+  return (
+    <Button isIconOnly variant='light' className={className} onPress={() => setMobileOpen(true)}>
+      <Menu size={20} />
+    </Button>
+  )
+}
+
+export function Sidebar({ className }: { className?: string }) {
+  const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar()
   const pathname = usePathname()
 
   const toggleCollapse = () => setCollapsed(!collapsed)
 
-  const sidebarWidth = collapsed ? 'w-[80px]' : 'w-[280px]'
+  // Reduced width for minimized feel
+  const sidebarWidth = collapsed ? 'w-[70px]' : 'w-[260px]'
 
   const menuItems = [
     {
@@ -79,25 +100,31 @@ export function Sidebar({
   ]
 
   const content = (
-    <div className='bg-background border-divider text-foreground flex h-full flex-col border-r'>
+    <div className='bg-sidebar text-sidebar-foreground relative flex h-full flex-col'>
+      {/* Background Noise for texture */}
+      <div
+        className='pointer-events-none absolute inset-0 opacity-[0.02] mix-blend-overlay'
+        style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
+      />
+
       {/* Header / Logo */}
       <div
         className={cn(
-          'border-divider flex h-16 items-center border-b px-4',
+          'border-sidebar-border/50 z-10 flex h-16 items-center border-b px-4',
           collapsed ? 'justify-center' : 'justify-between'
         )}
       >
-        <div className='flex items-center gap-2 text-xl font-bold'>
-          <div className='bg-primary/10 text-primary flex size-8 items-center justify-center rounded-lg'>
-            <Home size={20} />
+        <div className='flex items-center gap-3 font-bold'>
+          <div className='bg-sidebar-primary text-sidebar-primary-foreground shadow-sidebar-primary/20 flex size-8 items-center justify-center rounded-lg shadow-md'>
+            <Home size={18} />
           </div>
-          {!collapsed && <span>Acme Corp</span>}
+          {!collapsed && <span className='text-sm tracking-wide whitespace-nowrap'>Acme Corp</span>}
         </div>
       </div>
 
       {/* Main Content (Navigation) */}
-      <ScrollShadow className='flex-1 py-4'>
-        <div className='flex flex-col gap-6 px-3'>
+      <ScrollShadow className='z-10 flex-1 py-4'>
+        <div className={cn('flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}>
           {menuItems.map(section => (
             <Listbox
               key={section.title}
@@ -107,95 +134,154 @@ export function Sidebar({
                 list: 'gap-1'
               }}
             >
-              <ListboxSection title={!collapsed ? section.title : undefined} showDivider={!collapsed}>
-                {section.items.map(item => (
-                  <ListboxItem
-                    key={item.key}
-                    href={item.href}
-                    startContent={
-                      <item.icon
-                        size={20}
-                        className={cn('text-default-500', pathname === item.href && 'text-primary')}
-                      />
-                    }
-                    className={cn(
-                      pathname === item.href ? 'bg-primary/10 text-primary' : 'text-default-600',
-                      collapsed && 'justify-center px-0'
-                    )}
-                    textValue={item.label}
-                  >
-                    {!collapsed && <span className='text-sm font-medium'>{item.label}</span>}
-                  </ListboxItem>
-                ))}
+              <ListboxSection
+                title={!collapsed ? section.title : undefined}
+                showDivider={!collapsed}
+                className='mb-0'
+                classNames={{
+                  heading: 'text-sidebar-foreground/50 text-[10px] uppercase font-bold tracking-wider mb-2 pl-1',
+                  divider: 'bg-sidebar-border/50 my-2'
+                }}
+              >
+                {section.items.map(item => {
+                  const isActive = pathname === item.href
+
+                  return (
+                    <ListboxItem
+                      key={item.key}
+                      href={item.href}
+                      textValue={item.label}
+                      startContent={null} // We handle icon manually to ensure centering in collapsed state
+                      className={cn(
+                        'group relative overflow-hidden transition-all duration-200',
+
+                        // Reduced padding and height
+                        'h-9 py-0',
+                        collapsed ? 'mx-auto w-9 justify-center rounded-lg px-0' : 'rounded-md px-2',
+                        isActive
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
+                          : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-accent-foreground'
+                      )}
+                    >
+                      <div className={cn('flex h-full w-full items-center', collapsed ? 'justify-center' : 'gap-3')}>
+                        <item.icon
+                          size={18}
+                          className={cn(
+                            'shrink-0 transition-transform duration-200',
+                            isActive
+                              ? 'text-sidebar-primary'
+                              : 'text-sidebar-foreground/60 group-hover:text-sidebar-foreground',
+                            collapsed && isActive && 'scale-110'
+                          )}
+                        />
+
+                        {!collapsed && <span className={cn('flex-1 truncate text-xs font-medium')}>{item.label}</span>}
+
+                        {/* Active Indicator (Glow/Bar) */}
+                        {isActive && !collapsed && (
+                          <div className='bg-sidebar-primary h-1.5 w-1.5 rounded-full shadow-[0_0_8px_rgba(var(--sidebar-primary),0.6)]' />
+                        )}
+                      </div>
+                    </ListboxItem>
+                  )
+                })}
               </ListboxSection>
             </Listbox>
           ))}
         </div>
       </ScrollShadow>
 
-      {/* Footer / User Profile */}
-      <div className='border-divider border-t p-4'>
-        <div className={cn('flex items-center gap-3', collapsed ? 'justify-center' : '')}>
-          <Avatar isBordered size='sm' src='https://i.pravatar.cc/150?u=a042581f4e29026704d' />
+      {/* Footer / User Profile & Theme Switcher */}
+      <div className='border-sidebar-border/50 bg-sidebar/50 z-10 border-t p-3 backdrop-blur-sm'>
+        {!collapsed && (
+          <div className='mb-3 flex items-center justify-between px-1'>
+            <span className='text-sidebar-foreground/50 text-[10px] font-medium tracking-wider uppercase'>Theme</span>
+            <div className='origin-right scale-75'>
+              <ThemeSwitcher />
+            </div>
+          </div>
+        )}
+        {collapsed && (
+          <div className='mb-3 flex justify-center'>
+            <div className='scale-75'>
+              <ThemeSwitcher />
+            </div>
+          </div>
+        )}
+
+        <div
+          className={cn(
+            'border-sidebar-border/40 bg-sidebar-accent/10 hover:bg-sidebar-accent/20 flex cursor-pointer items-center gap-3 rounded-lg border p-1.5 transition-colors',
+            collapsed ? 'justify-center border-none bg-transparent p-1 hover:bg-transparent' : ''
+          )}
+        >
+          <Avatar
+            isBordered
+            size='sm'
+            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+            className={cn('ring-sidebar h-7 w-7 ring-2', collapsed ? 'h-8 w-8' : '')}
+          />
           {!collapsed && (
-            <div className='flex flex-col'>
-              <span className='text-small font-bold'>Jane Doe</span>
-              <span className='text-tiny text-default-500'>Admin</span>
+            <div className='flex flex-col overflow-hidden'>
+              <span className='truncate text-xs font-bold'>Jane Doe</span>
+              <span className='text-sidebar-foreground/60 truncate text-[10px]'>jane@acme.com</span>
             </div>
           )}
           {!collapsed && (
-            <Button isIconOnly variant='light' size='sm' className='ml-auto'>
-              <LogOut size={18} />
+            <Button isIconOnly variant='light' size='sm' className='text-sidebar-foreground/50 ml-auto'>
+              <LogOut size={16} />
             </Button>
           )}
         </div>
       </div>
 
       {/* Desktop Collapse Toggle */}
-      {!isMobile && (
-        <div className='absolute top-20 -right-3'>
-          <Button
-            isIconOnly
-            size='sm'
-            variant='solid'
-            color='primary'
-            radius='full'
-            className='h-6 w-6 min-w-6 shadow-md'
-            onPress={toggleCollapse}
-          >
-            {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
-          </Button>
-        </div>
-      )}
+      <div className='absolute top-20 -right-3 z-20 hidden md:block'>
+        <Button
+          isIconOnly
+          size='sm'
+          variant='shadow'
+          className='bg-sidebar-primary text-sidebar-primary-foreground border-sidebar hover:bg-sidebar-primary/90 h-6 w-6 min-w-6 border-2 shadow-md'
+          radius='full'
+          onPress={toggleCollapse}
+        >
+          {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
+        </Button>
+      </div>
     </div>
   )
 
-  if (isMobile) {
-    // For mobile drawer implementation, this component might just return the content style,
-    // but usually the sidebar wrapper handles the fixed positioning or drawer logic.
-    // We'll define a simpler mobile view or assume parent handles the Drawer overlay.
-    return (
+  // Mobile Drawer Wrapper
+  return (
+    <>
+      {/* Mobile Drawer */}
       <div
         className={cn(
-          'bg-background fixed inset-y-0 left-0 z-50 w-64 shadow-xl transition-transform',
-          mobileOpen ? 'translate-x-0' : '-translate-x-full',
-          className
+          'bg-sidebar fixed inset-y-0 left-0 z-50 w-[260px] shadow-2xl transition-transform duration-300 ease-in-out md:hidden',
+          mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {content}
       </div>
-    )
-  }
 
-  return (
-    <aside
-      className={cn(
-        'transition-width sticky top-0 hidden h-screen flex-col duration-300 md:flex',
-        sidebarWidth,
-        className
+      {/* Desktop Sidebar */}
+      <aside
+        className={cn(
+          'border-sidebar-border sticky top-0 hidden h-screen flex-col border-r transition-all duration-300 ease-in-out md:flex',
+          sidebarWidth,
+          className
+        )}
+      >
+        {content}
+      </aside>
+
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div
+          className='fixed inset-0 z-40 bg-black/60 backdrop-blur-[2px] md:hidden'
+          onClick={() => setMobileOpen(false)}
+        />
       )}
-    >
-      {content}
-    </aside>
+    </>
   )
 }
