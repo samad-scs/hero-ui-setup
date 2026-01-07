@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { HeroUIProvider } from '@heroui/system'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
 import { ToastProvider } from '@heroui/toast'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Only if using TypeScript
 declare module '@react-types/shared' {
@@ -13,16 +14,20 @@ declare module '@react-types/shared' {
   }
 }
 
+const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 60 * 1000 } } })
+
 const ClientProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
 
   return (
-    <HeroUIProvider navigate={router.push}>
-      <ToastProvider />
-      <NextThemesProvider attribute='class' defaultTheme='light'>
-        {children}
-      </NextThemesProvider>
-    </HeroUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <HeroUIProvider navigate={router.push}>
+        <ToastProvider />
+        <NextThemesProvider attribute='class' defaultTheme='light'>
+          {children}
+        </NextThemesProvider>
+      </HeroUIProvider>
+    </QueryClientProvider>
   )
 }
 

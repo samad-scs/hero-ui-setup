@@ -49,7 +49,7 @@ export function DataTable<T extends Record<string, any>>({
   columns,
   data,
   totalRows,
-  isLoading = false,
+  isLoading,
   pageIndex,
   pageSize,
   emptyPlaceholder = 'No data found',
@@ -74,7 +74,6 @@ export function DataTable<T extends Record<string, any>>({
     <div className='flex flex-col gap-4'>
       <Table
         aria-label='Data Table'
-        isHeaderSticky
         bottomContent={
           totalPages > 1 ? (
             <div className='flex w-full justify-center'>
@@ -90,9 +89,7 @@ export function DataTable<T extends Record<string, any>>({
             </div>
           ) : null
         }
-        classNames={{
-          wrapper: 'max-h-[600px]'
-        }}
+        isCompact
         sortDescriptor={sortDescriptor}
         selectedKeys={selectionMode !== 'none' ? undefined : new Set([])}
         selectionMode={selectionMode}

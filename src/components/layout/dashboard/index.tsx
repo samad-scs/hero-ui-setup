@@ -25,7 +25,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
       >
         <AppBar />
 
-        <main className='mt-4 flex-1 overflow-auto'>{children}</main>
+        <main className='mt-4 flex-1'>{children}</main>
       </div>
     </div>
   )
