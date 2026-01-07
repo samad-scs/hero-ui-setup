@@ -74,21 +74,10 @@ export function DataTable<T extends Record<string, any>>({
     <div className='flex flex-col gap-4'>
       <Table
         aria-label='Data Table'
-        bottomContent={
-          totalPages > 1 ? (
-            <div className='flex w-full justify-center'>
-              <Pagination
-                isCompact
-                showControls
-                showShadow
-                color={color}
-                page={pageIndex}
-                total={totalPages}
-                onChange={onPageChange}
-              />
-            </div>
-          ) : null
-        }
+        classNames={{
+          wrapper:
+            'max-w-[calc(100vw-30px)] p-0 md:max-w-full overflow-x-scroll! [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'
+        }}
         isCompact
         sortDescriptor={sortDescriptor}
         selectedKeys={selectionMode !== 'none' ? undefined : new Set([])}
@@ -105,9 +94,7 @@ export function DataTable<T extends Record<string, any>>({
           )}
         </TableHeader>
         <TableBody
-          items={isLoading ? [] : data} // If loading, show empty list to trigger loadingContent? Or just keep data?
-          // If we pass empty array, it shows emptyContent.
-          // HeroUI Table has `isLoading` prop on TableBody? No, it has `loadingContent` and `loadingState`.
+          items={data || []}
           loadingContent={<Spinner label='Loading...' />}
           loadingState={isLoading ? 'loading' : 'idle'}
           emptyContent={emptyPlaceholder}
@@ -121,6 +108,20 @@ export function DataTable<T extends Record<string, any>>({
           )}
         </TableBody>
       </Table>
+
+      {totalPages > 1 ? (
+        <div className='flex w-full justify-center'>
+          <Pagination
+            isCompact
+            showControls
+            showShadow
+            color={color}
+            page={pageIndex}
+            total={totalPages}
+            onChange={onPageChange}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

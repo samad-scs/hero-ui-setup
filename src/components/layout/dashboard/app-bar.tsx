@@ -28,7 +28,7 @@ export const AppBar = () => {
       </div>
 
       {/* Right Side: Actions */}
-      <div className='flex items-center gap-2'>
+      <div className='relative flex items-center gap-2'>
         {/* <SearchButton /> */}
         {/* <LanguageSwitcher /> */}
         <ThemeToggle />

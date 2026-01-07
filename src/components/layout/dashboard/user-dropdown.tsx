@@ -33,7 +33,7 @@ export const UserDropdown = () => {
   }
 
   return (
-    <Dropdown placement={'bottom-end'} offset={10}>
+    <Dropdown shouldBlockScroll>
       <DropdownTrigger>
         <div className={cn('flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors')}>
           <Avatar
