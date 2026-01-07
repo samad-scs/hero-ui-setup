@@ -67,7 +67,7 @@ export function DataTable<T extends Record<string, any>>({
   }, [totalRows, pageSize])
 
   const defaultRenderCell = (item: T, columnKey: React.Key) => {
-    return getKeyValue(item, columnKey)
+    return getKeyValue(item, columnKey as string | number)
   }
 
   return (
@@ -93,17 +93,8 @@ export function DataTable<T extends Record<string, any>>({
         classNames={{
           wrapper: 'max-h-[600px]'
         }}
-        sortDescriptor={sortDescriptor} // We handle sorting from parent if needed, but passing undefined here to controlled sort might be tricky. Let's see if we need controlled state locally.
-        // Actually, if we want controlled sorting from props, we should pass `sortDescriptor` prop.
-        // But the requirements said "we need UI capabilities for sorting... As we will sort data directly from backend api".
-        // So we need to accept a `sortDescriptor` prop ideally to match the API state.
-        // For now I'll adding `sortDescriptor` to props in next edit if needed, or just let Table handle the visual state via onSortChange.
-        // Wait, to show the arrow, Table needs `sortDescriptor` prop.
-        // I will add it to the interface implicitly or explicitly.
-        // For now, I will start with this structure.
-        selectedKeys={selectionMode !== 'none' ? undefined : new Set([])} // If uncontrolled, undefined is fine? No, if we want `onSelectionChange`, we usually utilize `selectedKeys`.
-        // Let's assume the parent controls selection if they care about valid values.
-        // Reuse selection logic from reference?
+        sortDescriptor={sortDescriptor}
+        selectedKeys={selectionMode !== 'none' ? undefined : new Set([])}
         selectionMode={selectionMode}
         color={color}
         onSelectionChange={onSelectionChange}

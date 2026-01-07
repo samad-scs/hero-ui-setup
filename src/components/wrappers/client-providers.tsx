@@ -4,6 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { HeroUIProvider } from '@heroui/system'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
+import { ToastProvider } from '@heroui/toast'
 
 // Only if using TypeScript
 declare module '@react-types/shared' {
@@ -17,6 +18,7 @@ const ClientProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <HeroUIProvider navigate={router.push}>
+      <ToastProvider />
       <NextThemesProvider attribute='class' defaultTheme='light'>
         {children}
       </NextThemesProvider>

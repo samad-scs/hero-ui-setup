@@ -662,6 +662,20 @@
     tailwind-merge "3.4.0"
     tailwind-variants "3.2.2"
 
+"@heroui/toast@^2.0.19":
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/@heroui/toast/-/toast-2.0.19.tgz#d79d6ca7a5f5bc9531d69bd3470d5aa39e89fc64"
+  integrity sha512-KUl/vIMoZQxpjLPxx57XKh39Ai1CyPqm+1Pn20xOVk0fV+2SqC7OW6xivwwBnS7rysx8JfMHwNVJUHTU0o9K1Q==
+  dependencies:
+    "@heroui/react-utils" "2.1.14"
+    "@heroui/shared-icons" "2.1.10"
+    "@heroui/shared-utils" "2.1.12"
+    "@heroui/spinner" "2.2.26"
+    "@heroui/use-is-mobile" "2.2.12"
+    "@react-aria/interactions" "3.26.0"
+    "@react-aria/toast" "3.0.9"
+    "@react-stately/toast" "3.1.2"
+
 "@heroui/tooltip@^2.2.26":
   version "2.2.26"
   resolved "https://registry.npmjs.org/@heroui/tooltip/-/tooltip-2.2.26.tgz"
@@ -1242,6 +1256,16 @@
     "@react-types/shared" "^3.32.1"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/landmark@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@react-aria/landmark/-/landmark-3.0.8.tgz#f19443510ccbf2bd826dd11365867ce91fcc1229"
+  integrity sha512-xuY8kYxCrF9C0h0Pj2lZHoxCidNfQ/SrkYWXuiN+LuBTJGCmPVif93gt7TklQ0rKJ+pKJsUgh8AC0pgwI3QP7A==
+  dependencies:
+    "@react-aria/utils" "^3.32.0"
+    "@react-types/shared" "^3.32.1"
+    "@swc/helpers" "^0.5.0"
+    use-sync-external-store "^1.4.0"
+
 "@react-aria/listbox@3.15.1":
   version "3.15.1"
   resolved "https://registry.npmjs.org/@react-aria/listbox/-/listbox-3.15.1.tgz"
@@ -1355,6 +1379,20 @@
     "@react-stately/utils" "^3.11.0"
     "@react-types/shared" "^3.32.1"
     "@react-types/textfield" "^3.12.6"
+    "@swc/helpers" "^0.5.0"
+
+"@react-aria/toast@3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@react-aria/toast/-/toast-3.0.9.tgz#feb1516089b2f7a4ef4e05d4a307f3fb1e2ea021"
+  integrity sha512-2sRitczXl5VEwyq97o8TVvq3bIqLA7EfA7dhDPkYlHGa4T1vzKkhNqgkskKd9+Tw7gqeFRFjnokh+es9jkM11g==
+  dependencies:
+    "@react-aria/i18n" "^3.12.14"
+    "@react-aria/interactions" "^3.26.0"
+    "@react-aria/landmark" "^3.0.8"
+    "@react-aria/utils" "^3.32.0"
+    "@react-stately/toast" "^3.1.2"
+    "@react-types/button" "^3.14.1"
+    "@react-types/shared" "^3.32.1"
     "@swc/helpers" "^0.5.0"
 
 "@react-aria/toggle@^3.12.3":
@@ -1513,6 +1551,14 @@
     "@react-types/shared" "^3.32.1"
     "@react-types/table" "^3.13.4"
     "@swc/helpers" "^0.5.0"
+
+"@react-stately/toast@3.1.2", "@react-stately/toast@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@react-stately/toast/-/toast-3.1.2.tgz#0502040b6bd57479eaba1bca2f4c66e9e957e55a"
+  integrity sha512-HiInm7bck32khFBHZThTQaAF6e6/qm57F4mYRWdTq8IVeGDzpkbUYibnLxRhk0UZ5ybc6me+nqqPkG/lVmM42Q==
+  dependencies:
+    "@swc/helpers" "^0.5.0"
+    use-sync-external-store "^1.4.0"
 
 "@react-stately/toggle@3.9.3", "@react-stately/toggle@^3.9.3":
   version "3.9.3"
@@ -4456,6 +4502,11 @@ use-latest@^1.2.1:
   integrity sha512-mhg3xdm9NaM8q+gLT8KryJPnRFOz1/5XPBhmDEVZK1webPzDjrPk7f/mbpeLqTgB9msytYWANxgALOCJKnLvcQ==
   dependencies:
     use-isomorphic-layout-effect "^1.1.1"
+
+use-sync-external-store@^1.4.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
+  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
 
 which-boxed-primitive@^1.1.0, which-boxed-primitive@^1.1.1:
   version "1.1.1"
