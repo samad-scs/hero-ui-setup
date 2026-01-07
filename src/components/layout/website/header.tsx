@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@heroui/button'
 import { Link } from '@heroui/link'
 import {
@@ -11,6 +13,8 @@ import {
 } from '@heroui/navbar'
 import { ThemeSwitcher } from '../../custom/theme-switcher'
 import { ROUTES } from '@/constants/routes'
+import { WEBSITE_NAVIGATION } from '@/data/website-navigation'
+import { usePathname } from 'next/navigation'
 
 export const AcmeLogo = () => {
   return (
@@ -26,18 +30,7 @@ export const AcmeLogo = () => {
 }
 
 export default function Header() {
-  const menuItems = [
-    'Profile',
-    'Dashboard',
-    'Activity',
-    'Analytics',
-    'System',
-    'Deployments',
-    'My Settings',
-    'Team Settings',
-    'Help & Feedback',
-    'Log Out'
-  ]
+  const pathname = usePathname()
 
   return (
     <Navbar disableAnimation isBordered>
@@ -45,41 +38,28 @@ export default function Header() {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      <NavbarContent className='pr-3 sm:hidden' justify='center'>
+      <NavbarContent className='pr-3' justify='center'>
         <NavbarBrand>
           <AcmeLogo />
-          <p className='font-bold text-inherit'>ACME</p>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-        <NavbarBrand>
-          <AcmeLogo />
-          <p className='font-bold text-inherit'>ACME</p>
-        </NavbarBrand>
-        <NavbarItem>
-          <Link color='foreground' href='#'>
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current='page' color='warning' href='#'>
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color='foreground' href='#'>
-            Integrations
-          </Link>
-        </NavbarItem>
+        {WEBSITE_NAVIGATION.map((item, index) => (
+          <NavbarItem key={index} isActive={item.href === pathname}>
+            <Link color={item.href === pathname ? 'primary' : 'foreground'} href={item.href}>
+              {item.title}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
 
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
           <Link href={ROUTES.DASHBOARD}>Login</Link>
         </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color='warning' href='#' variant='flat'>
+        <NavbarItem className='hidden lg:flex'>
+          <Button as={Link} color='primary' className='text-foreground' href='#' variant='flat'>
             Sign Up
           </Button>
         </NavbarItem>
@@ -89,15 +69,15 @@ export default function Header() {
       </NavbarContent>
 
       <NavbarMenu>
-        {menuItems.map((item, index) => (
+        {WEBSITE_NAVIGATION.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               className='w-full'
-              color={index === 2 ? 'warning' : index === menuItems.length - 1 ? 'danger' : 'foreground'}
-              href='#'
+              color={index === WEBSITE_NAVIGATION.length - 1 ? 'danger' : 'foreground'}
+              href={item.href}
               size='lg'
             >
-              {item}
+              {item.title}
             </Link>
           </NavbarMenuItem>
         ))}

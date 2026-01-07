@@ -124,8 +124,7 @@ function SidebarContent({
     } else if (key === 'theme') {
       setTheme(theme === 'dark' ? 'light' : 'dark')
     } else if (key === 'logout') {
-      // Handle Logout Logic
-      console.log('Logging out...')
+      router?.push(ROUTES.HOME)
     }
   }
 
@@ -166,7 +165,7 @@ function SidebarContent({
       </div>
 
       {/* Main Content (Navigation) */}
-      <ScrollShadow className='z-10 w-full flex-1 py-4'>
+      <ScrollShadow className='z-10 w-full flex-1 overflow-x-hidden py-4'>
         <div className={cn('flex flex-col gap-1', collapsed ? 'px-2' : 'px-3')}>
           {MENU_ITEMS.map(section => (
             <div key={section.title} className='mb-2'>
