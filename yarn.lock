@@ -323,6 +323,14 @@
     "@react-aria/focus" "3.21.3"
     "@react-aria/interactions" "3.26.0"
 
+"@heroui/badge@^2.2.18":
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/@heroui/badge/-/badge-2.2.18.tgz#a95e860085ff9bbbbf29d1c9ba29fe114b3b0dad"
+  integrity sha512-OfGove8YJ9oDrdugzq05FC15ZKD5nzqe+thPZ+1SY1LZorJQjZvqSD9QnoEH1nG7fu2IdH6pYJy3sZ/b6Vj5Kg==
+  dependencies:
+    "@heroui/react-utils" "2.1.14"
+    "@heroui/shared-utils" "2.1.12"
+
 "@heroui/button@2.2.29", "@heroui/button@^2.2.29":
   version "2.2.29"
   resolved "https://registry.npmjs.org/@heroui/button/-/button-2.2.29.tgz"

@@ -1,7 +1,10 @@
-import React from 'react'
+export const metadata = {
+  title: 'Dashboard',
+  description: 'Dashboard'
+}
 
 const Dashboard = () => {
-  return <div>Dashboard</div>
+  return <div className='min-h-screen'>Dashboard</div>
 }
 
 export default Dashboard

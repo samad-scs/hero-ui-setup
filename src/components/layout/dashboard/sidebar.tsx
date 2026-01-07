@@ -1,26 +1,23 @@
 'use client'
 
 // ** React and Core Library Imports
-import React, { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 // ** Next.js and Internationalization Imports
-import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 // ** UI Library Imports
-import { Avatar } from '@heroui/avatar'
 import { Button } from '@heroui/button'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { cn } from '@heroui/theme'
+import { Avatar } from '@heroui/avatar'
 
 // ** Third-Party Library Imports
-import { ChevronLeft, ChevronRight, Home, LogOut, Menu, Moon, Sun, User } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Home, Menu } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 // ** Custom Component Imports
-import { ROUTES } from '@/constants/routes'
 import { MENU_ITEMS } from '@/data/menu-data'
 
 // -- Context --
@@ -57,8 +54,8 @@ export const SidebarTrigger = ({ className }: { className?: string }) => {
   const { setMobileOpen } = useSidebar()
 
   return (
-    <Button isIconOnly variant='light' className={className} onPress={() => setMobileOpen(true)}>
-      <Menu size={20} />
+    <Button isIconOnly variant='light' size='sm' className={className} onPress={() => setMobileOpen(true)}>
+      <Menu size={14} />
     </Button>
   )
 }
@@ -111,20 +108,7 @@ function SidebarContent({
   toggleCollapse?: () => void
   onItemClick?: () => void
 }) {
-  const { theme, setTheme } = useTheme()
-  const router = useRouter()
   const pathname = usePathname()
-
-  const handleAction = (key: React.Key) => {
-    if (key === 'profile') {
-      router.push(ROUTES.PROFILE)
-      if (onItemClick) onItemClick()
-    } else if (key === 'theme') {
-      setTheme(theme === 'dark' ? 'light' : 'dark')
-    } else if (key === 'logout') {
-      router?.push(ROUTES.HOME)
-    }
-  }
 
   return (
     <div className='bg-sidebar text-sidebar-foreground relative flex h-full w-full flex-col'>
@@ -257,69 +241,38 @@ function SidebarContent({
 
       {/* Footer / User Profile & Actions OLD */}
       <div className='border-sidebar-border/50 bg-sidebar/50 z-10 shrink-0 overflow-hidden border-t p-3 backdrop-blur-sm'>
-        <Dropdown placement={collapsed ? 'right-end' : 'top-start'} offset={10}>
-          <DropdownTrigger>
-            <div
-              className={cn(
-                'border-sidebar-border/40 bg-sidebar-accent/10 hover:bg-sidebar-accent/20 flex cursor-pointer items-center gap-3 rounded-lg border p-1.5 transition-colors',
-                collapsed ? 'justify-center border-none bg-transparent p-1 hover:bg-transparent' : ''
-              )}
-            >
-              <Avatar
-                isBordered
-                size='sm'
-                src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
-                className={cn('ring-sidebar h-7 w-7 shrink-0 ring-2', collapsed ? 'h-8 w-8' : '')}
-              />
+        <div
+          className={cn(
+            'border-sidebar-border/40 bg-sidebar-accent/10 flex cursor-pointer items-center gap-3 rounded-lg border p-1.5 transition-colors',
+            collapsed ? 'justify-center border-none bg-transparent p-1 hover:bg-transparent' : ''
+          )}
+        >
+          <Avatar
+            isBordered
+            size='sm'
+            src='https://i.pravatar.cc/150?u=a042581f4e29026704d'
+            className={cn('ring-sidebar h-7 w-7 shrink-0 ring-2', collapsed ? 'h-8 w-8' : '')}
+          />
 
-              <AnimatePresence>
-                {!collapsed && (
-                  <motion.div
-                    initial={{ opacity: 0, width: 0 }}
-                    animate={{ opacity: 1, width: 'auto' }}
-                    exit={{ opacity: 0, width: 0 }}
-                    className='ml-1 flex flex-col overflow-hidden text-left'
-                  >
-                    <span className='truncate text-xs font-bold'>Jane Doe</span>
-                    <span className='text-sidebar-foreground/60 truncate text-[10px]'>jane@acme.com</span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {!collapsed && (
-                <div className='text-sidebar-foreground/50 ml-auto'>
-                  <ChevronRight size={16} />
-                </div>
-              )}
-            </div>
-          </DropdownTrigger>
-          <DropdownMenu aria-label='User Actions' variant='flat' onAction={handleAction}>
-            <DropdownItem key='profile' startContent={<User size={16} />} textValue='Profile'>
-              Profile
-            </DropdownItem>
-            <DropdownItem
-              key='theme'
-              startContent={theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-              textValue='Switch Theme'
-            >
-              Switch to {theme === 'dark' ? 'Light' : 'Dark'} Mode
-            </DropdownItem>
-            <DropdownItem
-              key='logout'
-              color='danger'
-              className='text-danger'
-              startContent={<LogOut size={16} />}
-              textValue='Logout'
-            >
-              Logout
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+          <AnimatePresence>
+            {!collapsed && (
+              <motion.div
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: 'auto' }}
+                exit={{ opacity: 0, width: 0 }}
+                className='ml-1 flex flex-col overflow-hidden text-left'
+              >
+                <span className='truncate text-xs font-bold'>Jane Doe</span>
+                <span className='text-sidebar-foreground/60 truncate text-[10px]'>jane@acme.com</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Desktop Collapse Toggle */}
       {toggleCollapse && (
-        <div className='absolute top-20 -right-3 z-20 hidden md:block'>
+        <div className='absolute top-16 -right-4 z-20 hidden md:block'>
           <Button
             isIconOnly
             size='sm'
