@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation'
 
 // ** UI Library Imports
 import { Avatar } from '@heroui/avatar'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
+import { Listbox, ListboxItem } from '@heroui/listbox'
+import { Popover, PopoverContent, PopoverTrigger } from '@heroui/popover'
 import { cn } from '@heroui/theme'
 
 // ** Third-Party Library Imports
@@ -33,8 +34,8 @@ export const UserDropdown = () => {
   }
 
   return (
-    <Dropdown shouldBlockScroll>
-      <DropdownTrigger>
+    <Popover placement='bottom-end'>
+      <PopoverTrigger>
         <div className={cn('flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors')}>
           <Avatar
             isBordered
@@ -43,21 +44,23 @@ export const UserDropdown = () => {
             className={cn('h-7 w-7 shrink-0')}
           />
         </div>
-      </DropdownTrigger>
-      <DropdownMenu aria-label='User Actions' variant='flat' onAction={handleAction}>
-        <DropdownItem key='profile' startContent={<User size={16} />} textValue='Profile'>
-          Profile
-        </DropdownItem>
-        <DropdownItem
-          key='logout'
-          color='danger'
-          className='text-danger'
-          startContent={<LogOut size={16} />}
-          textValue='Logout'
-        >
-          Logout
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+      </PopoverTrigger>
+      <PopoverContent className='p-1'>
+        <Listbox aria-label='User Actions' onAction={handleAction} variant='flat' className='min-w-44'>
+          <ListboxItem key='profile' startContent={<User size={16} />} textValue='Profile'>
+            Profile
+          </ListboxItem>
+          <ListboxItem
+            key='logout'
+            color='danger'
+            className='text-danger'
+            startContent={<LogOut size={16} />}
+            textValue='Logout'
+          >
+            Logout
+          </ListboxItem>
+        </Listbox>
+      </PopoverContent>
+    </Popover>
   )
 }

@@ -15,7 +15,7 @@ export const AppBar = () => {
   return (
     <header
       className={cn(
-        'sticky top-0 z-20 flex h-14 items-center justify-between border border-t-0 border-transparent transition-all duration-300 ease-in-out',
+        'sticky top-0 z-50 flex h-14 items-center justify-between border border-t-0 border-transparent transition-all duration-300 ease-in-out',
         isScrolled ? 'bg-background/80 border-border rounded-b-2xl shadow-sm backdrop-blur-md' : 'w-full bg-transparent'
       )}
       style={isScrolled ? { paddingInline: `${themeConfig.layoutPadding}px` } : undefined}

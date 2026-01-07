@@ -17,7 +17,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
 
       {/* Main Content Area */}
       <div
-        className={cn('mx-auto flex flex-1 flex-col')}
+        className={cn('mx-auto flex min-h-screen flex-1 flex-col')}
         style={{
           paddingInline: `${themeConfig.layoutPadding}px`,
           maxWidth: themeConfig.contentWidth === 'compact' ? `${themeConfig.compactContentWidth}px` : 'full'
@@ -25,7 +25,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
       >
         <AppBar />
 
-        <main className='mt-4 flex-1'>{children}</main>
+        <main className='bg-background mt-4 flex-1'>{children}</main>
       </div>
     </div>
   )

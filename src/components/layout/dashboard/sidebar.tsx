@@ -280,7 +280,7 @@ function SidebarContent({
             isIconOnly
             size='sm'
             variant='shadow'
-            className='bg-sidebar-primary text-sidebar-primary-foreground border-sidebar hover:bg-sidebar-primary/90 h-7 w-7 min-w-7 border-2 shadow-md'
+            className='bg-sidebar-primary text-sidebar-primary-foreground border-sidebar hover:bg-sidebar-primary/90 z-20 h-7 w-7 min-w-7 border-2 shadow-md'
             radius='full'
             onPress={toggleCollapse}
           >
