@@ -7,8 +7,8 @@ import { Bell } from 'lucide-react'
 export const NotificationButton = () => {
   return (
     <Button isIconOnly size='sm' variant='light' radius='full'>
-      <Badge color='danger' size='sm' isDot content='5' shape='circle'>
-        <Bell size={16} className='text-default-500' />
+      <Badge color='danger' size='sm' isDot content='' shape='circle'>
+        <Bell size={16} />
       </Badge>
     </Button>
   )

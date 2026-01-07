@@ -1,7 +1,8 @@
 'use client'
 
+import { MoonIcon } from '@/components/ui/moon'
+import { SunIcon } from '@/components/ui/sun'
 import { Button } from '@heroui/button'
-import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 export const ThemeToggle = () => {
@@ -13,11 +14,7 @@ export const ThemeToggle = () => {
 
   return (
     <Button isIconOnly size='sm' variant='light' radius='full' onPress={handleThemeToggle}>
-      {theme === 'dark' ? (
-        <Sun size={16} className='text-default-500' />
-      ) : (
-        <Moon size={16} className='text-default-500' />
-      )}
+      {theme === 'dark' ? <SunIcon size={16} /> : <MoonIcon size={16} />}
     </Button>
   )
 }

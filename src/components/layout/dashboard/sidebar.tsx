@@ -8,17 +8,19 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 // ** UI Library Imports
+import { Avatar } from '@heroui/avatar'
 import { Button } from '@heroui/button'
 import { ScrollShadow } from '@heroui/scroll-shadow'
 import { cn } from '@heroui/theme'
-import { Avatar } from '@heroui/avatar'
 
 // ** Third-Party Library Imports
-import { ChevronLeft, ChevronRight, Home, Menu } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Home } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 // ** Custom Component Imports
+import { PanelLeftOpenIcon } from '@/components/ui/panel-left-open'
 import { MENU_ITEMS } from '@/data/menu-data'
+import { themeConfig } from '@/config/themeConfig'
 
 // -- Context --
 interface SidebarContextProps {
@@ -55,7 +57,7 @@ export const SidebarTrigger = ({ className }: { className?: string }) => {
 
   return (
     <Button isIconOnly variant='light' size='sm' className={className} onPress={() => setMobileOpen(true)}>
-      <Menu size={14} />
+      <PanelLeftOpenIcon size={16} />
     </Button>
   )
 }
@@ -70,9 +72,10 @@ export function Sidebar({ className }: { className?: string }) {
       {/* Mobile Drawer */}
       <div
         className={cn(
-          'bg-sidebar fixed inset-y-0 left-0 z-50 w-[260px] shadow-2xl transition-transform duration-300 ease-in-out md:hidden',
+          'bg-sidebar fixed inset-y-0 left-0 z-50 shadow-2xl transition-transform duration-300 ease-in-out md:hidden',
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
+        style={{ width: themeConfig.sidebarWidth }}
       >
         <SidebarContent collapsed={false} onItemClick={() => setMobileOpen(false)} />
       </div>
@@ -272,7 +275,7 @@ function SidebarContent({
 
       {/* Desktop Collapse Toggle */}
       {toggleCollapse && (
-        <div className='absolute top-16 -right-4 z-20 hidden md:block'>
+        <div className='absolute top-11 -right-4 z-20 hidden md:block'>
           <Button
             isIconOnly
             size='sm'

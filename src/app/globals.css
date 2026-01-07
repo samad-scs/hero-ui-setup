@@ -57,7 +57,7 @@
 }
 
 .dark {
-  --background: rgb(44 32 37);
+  --background: rgb(22, 16, 18);
   --foreground: rgb(241 233 229);
   --card: rgb(58 47 54);
   --card-foreground: rgb(241 233 229);
@@ -152,16 +152,25 @@
 }
 
 @layer base {
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
   }
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
 }

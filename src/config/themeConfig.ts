@@ -4,6 +4,7 @@ export type ThemeConfig = {
   settingsCookieName: string
   compactContentWidth: number
   layoutPadding: number
+  sidebarWidth: number
   contentWidth: 'compact' | 'wide'
 }
 
@@ -12,6 +13,7 @@ export const themeConfig: ThemeConfig = {
   mode: 'light',
   settingsCookieName: 'hero-ui-theme',
   compactContentWidth: 1500,
-  layoutPadding: 16,
+  layoutPadding: 12,
+  sidebarWidth: 260,
   contentWidth: 'compact'
 }

@@ -4,29 +4,28 @@
 import React from 'react'
 
 // ** Custom Component Imports
-import { Sidebar, SidebarProvider } from './sidebar'
-import { AppBar } from './app-bar'
-import { cn } from '@/lib/utils'
 import { themeConfig } from '@/config/themeConfig'
+import { cn } from '@/lib/utils'
+import { AppBar } from './app-bar'
+import { Sidebar, SidebarProvider } from './sidebar'
 
 function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className='bg-default-50 flex w-full'>
+    <div className='bg-background flex w-full'>
       {/* Sidebar which handles its own mobile/desktop state via context */}
       <Sidebar />
 
       {/* Main Content Area */}
       <div
-        className={cn(
-          'mx-auto flex max-w-[1500px] flex-1 flex-col',
-          themeConfig.contentWidth === 'compact' ? 'max-w-[1500px]' : 'max-w-full'
-        )}
+        className={cn('mx-auto flex flex-1 flex-col')}
+        style={{
+          paddingInline: `${themeConfig.layoutPadding}px`,
+          maxWidth: themeConfig.contentWidth === 'compact' ? `${themeConfig.compactContentWidth}px` : 'full'
+        }}
       >
         <AppBar />
 
-        <main className='flex-1 overflow-auto' style={{ paddingInline: `${themeConfig.layoutPadding}px` }}>
-          {children}
-        </main>
+        <main className='mt-4 flex-1 overflow-auto'>{children}</main>
       </div>
     </div>
   )

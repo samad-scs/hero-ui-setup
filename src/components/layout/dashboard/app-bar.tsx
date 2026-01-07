@@ -15,10 +15,10 @@ export const AppBar = () => {
   return (
     <header
       className={cn(
-        'sticky top-0 z-20 flex h-12 w-full items-center justify-between transition-all duration-300',
-        isScrolled ? 'border-divider bg-background/80 border-b backdrop-blur-md' : 'bg-transparent'
+        'sticky top-0 z-20 flex h-14 items-center justify-between border border-t-0 border-transparent transition-all duration-300 ease-in-out',
+        isScrolled ? 'bg-background/80 border-border rounded-b-2xl shadow-sm backdrop-blur-md' : 'w-full bg-transparent'
       )}
-      style={{ paddingInline: `${themeConfig.layoutPadding}px` }}
+      style={isScrolled ? { paddingInline: `${themeConfig.layoutPadding}px` } : undefined}
     >
       {/* Left Side: Mobile Toggle & Brand (Optional on desktop if sidebar is present) */}
       <div className='flex items-center gap-2'>

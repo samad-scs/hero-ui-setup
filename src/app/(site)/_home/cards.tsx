@@ -75,7 +75,7 @@ export default function CardsComponent() {
           className='z-0 h-full w-full object-cover'
           src='https://heroui.com/images/card-example-5.jpeg'
         />
-        <CardFooter className='border-default-600 dark:border-default-100 absolute bottom-0 z-10 border-t-1 bg-black/40'>
+        <CardFooter className='border-border absolute bottom-0 z-10 border-t-1 bg-black/40'>
           <div className='flex grow items-center gap-2'>
             <Image
               alt='Breathing app icon'
