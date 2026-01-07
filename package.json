@@ -1,7 +1,10 @@
 {
-  "name": "hero-ui-setup",
+  "name": "hero-ui-admin-template",
   "version": "0.1.0",
-  "private": true,
+  "description": "Admin Template using Hero UI",
+  "author": "Samad Saiyed",
+  "homepage": "https://github.com/samad-scs/hero-ui-setup",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
