@@ -1,7 +1,7 @@
 'use client'
 
 // ** React and Core Library Imports
-import React from 'react'
+import React, { useState } from 'react'
 
 // ** Next.js and Internationalization Imports
 import { useTheme } from 'next-themes'
@@ -20,8 +20,12 @@ import { LogOut, User } from 'lucide-react'
 import { ROUTES } from '@/constants/routes'
 
 export const UserDropdown = () => {
+  // ** Hooks
   const { theme, setTheme } = useTheme()
   const router = useRouter()
+
+  // ** States
+  const [open, setOpen] = useState(false)
 
   const handleAction = (key: React.Key) => {
     if (key === 'profile') {
@@ -34,7 +38,7 @@ export const UserDropdown = () => {
   }
 
   return (
-    <Popover placement='bottom-end'>
+    <Popover isOpen={open} onOpenChange={setOpen} placement='bottom-end'>
       <PopoverTrigger>
         <div className={cn('flex cursor-pointer items-center gap-3 rounded-lg p-1.5 transition-colors')}>
           <Avatar
@@ -47,7 +51,12 @@ export const UserDropdown = () => {
       </PopoverTrigger>
       <PopoverContent className='p-1'>
         <Listbox aria-label='User Actions' onAction={handleAction} variant='flat' className='min-w-44'>
-          <ListboxItem key='profile' startContent={<User size={16} />} textValue='Profile'>
+          <ListboxItem
+            key='profile'
+            onClick={() => setOpen(false)}
+            startContent={<User size={16} />}
+            textValue='Profile'
+          >
             Profile
           </ListboxItem>
           <ListboxItem
