@@ -9,12 +9,13 @@ import { useRouter } from 'next/navigation'
 
 // ** UI Library Imports
 import { Avatar } from '@heroui/avatar'
+import { User } from '@heroui/user'
 import { Listbox, ListboxItem } from '@heroui/listbox'
 import { Popover, PopoverContent, PopoverTrigger } from '@heroui/popover'
 import { cn } from '@heroui/theme'
 
 // ** Third-Party Library Imports
-import { LogOut, User } from 'lucide-react'
+import { LogOut, UserIcon } from 'lucide-react'
 
 // ** Custom Component Imports
 import { ROUTES } from '@/constants/routes'
@@ -50,11 +51,25 @@ export const UserDropdown = () => {
         </div>
       </PopoverTrigger>
       <PopoverContent className='p-1'>
-        <Listbox aria-label='User Actions' onAction={handleAction} variant='flat' className='min-w-44'>
+        <Listbox aria-label='User Actions' onAction={handleAction} variant='flat' className='min-w-56'>
+          <ListboxItem key='user'>
+            <User
+              avatarProps={{
+                size: 'sm',
+                src: 'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+              }}
+              classNames={{
+                name: 'text-default-600',
+                description: 'text-default-500'
+              }}
+              description='@john.acme.com'
+              name='John Doe'
+            />
+          </ListboxItem>
           <ListboxItem
             key='profile'
             onClick={() => setOpen(false)}
-            startContent={<User size={16} />}
+            startContent={<UserIcon size={16} />}
             textValue='Profile'
           >
             Profile

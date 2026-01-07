@@ -14,13 +14,15 @@ import { ScrollShadow } from '@heroui/scroll-shadow'
 import { cn } from '@heroui/theme'
 
 // ** Third-Party Library Imports
-import { ChevronLeft, ChevronRight, Home } from 'lucide-react'
+import { Home } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 // ** Custom Component Imports
 import { PanelLeftOpenIcon } from '@/components/ui/panel-left-open'
 import { MENU_ITEMS } from '@/data/menu-data'
 import { themeConfig } from '@/config/themeConfig'
+import { ChevronRightIcon } from '@/components/ui/chevron-right'
+import { ChevronLeftIcon } from '@/components/ui/chevron-left'
 
 // -- Context --
 interface SidebarContextProps {
@@ -284,7 +286,7 @@ function SidebarContent({
             radius='full'
             onPress={toggleCollapse}
           >
-            {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+            {collapsed ? <ChevronRightIcon size={14} /> : <ChevronLeftIcon size={14} />}
           </Button>
         </div>
       )}

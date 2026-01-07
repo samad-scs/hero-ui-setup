@@ -1,96 +1,19 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
 import { DataTable, DataTableColumn } from '@/components/custom/data-table'
+import { ChevronDownIcon } from '@/components/ui/chevron-down'
+import OptionMenu from '@/components/ui/option-menu'
+import { PlusIcon } from '@/components/ui/plus'
+import { SearchIcon } from '@/components/ui/search'
 import { fetchProjectList } from '@/services/modules/project'
 import { Project } from '@/services/modules/project/types'
-import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Button } from '@heroui/button'
-import { Input } from '@heroui/input'
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@heroui/dropdown'
-import { Chip, ChipProps } from '@heroui/chip'
 import { Pagination as PaginationType } from '@/types/api'
-
-// Icons
-const PlusIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    aria-hidden='true'
-    fill='none'
-    focusable='false'
-    height='1em'
-    role='presentation'
-    viewBox='0 0 24 24'
-    width='1em'
-    {...props}
-  >
-    <g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5}>
-      <path d='M6 12h12' />
-      <path d='M12 18V6' />
-    </g>
-  </svg>
-)
-
-const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    aria-hidden='true'
-    fill='none'
-    focusable='false'
-    height='1em'
-    role='presentation'
-    viewBox='0 0 24 24'
-    width='1em'
-    {...props}
-  >
-    <path
-      d='M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z'
-      stroke='currentColor'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      strokeWidth='2'
-    />
-    <path d='M22 22L20 20' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' />
-  </svg>
-)
-
-const ChevronDownIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    aria-hidden='true'
-    fill='none'
-    focusable='false'
-    height='1em'
-    role='presentation'
-    viewBox='0 0 24 24'
-    width='1em'
-    {...props}
-  >
-    <path
-      d='m19.92 8.95-6.52 6.52c-.77.77-2.03.77-2.8 0L4.08 8.95'
-      stroke='currentColor'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      strokeMiterlimit={10}
-      strokeWidth={1.5}
-    />
-  </svg>
-)
-
-const VerticalDotsIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    aria-hidden='true'
-    fill='none'
-    focusable='false'
-    height='24'
-    role='presentation'
-    viewBox='0 0 24 24'
-    width='24'
-    {...props}
-  >
-    <path
-      d='M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'
-      fill='currentColor'
-    />
-  </svg>
-)
+import { Button } from '@heroui/button'
+import { Chip, ChipProps } from '@heroui/chip'
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@heroui/dropdown'
+import { Input } from '@heroui/input'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
+import React, { useMemo, useState } from 'react'
 
 // Constants
 const columns: DataTableColumn[] = [
@@ -183,20 +106,7 @@ export const ProjectList = () => {
       case 'actions':
         return (
           <div className='relative flex items-center justify-center gap-2'>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size='sm' variant='light'>
-                  <VerticalDotsIcon className='text-default-300' />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem key='view'>View</DropdownItem>
-                <DropdownItem key='edit'>Edit</DropdownItem>
-                <DropdownItem key='delete' className='text-danger' color='danger'>
-                  Delete
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <OptionMenu options={[]} />
           </div>
         )
       default:
@@ -213,7 +123,7 @@ export const ProjectList = () => {
             isClearable
             className='w-full sm:max-w-[44%]'
             placeholder='Search by name, code...'
-            startContent={<SearchIcon />}
+            startContent={<SearchIcon size={16} />}
             value={search}
             onClear={handleClearSearch}
             onValueChange={handleSearchChange}
@@ -221,7 +131,7 @@ export const ProjectList = () => {
           <div className='flex gap-3'>
             <Dropdown>
               <DropdownTrigger className='hidden sm:flex'>
-                <Button endContent={<ChevronDownIcon className='text-small' />} variant='flat'>
+                <Button endContent={<ChevronDownIcon size={16} />} variant='flat'>
                   Status
                 </Button>
               </DropdownTrigger>
@@ -244,7 +154,7 @@ export const ProjectList = () => {
                 ))}
               </DropdownMenu>
             </Dropdown>
-            <Button color='primary' endContent={<PlusIcon />}>
+            <Button color='primary' endContent={<PlusIcon size={16} />}>
               Add New
             </Button>
           </div>
