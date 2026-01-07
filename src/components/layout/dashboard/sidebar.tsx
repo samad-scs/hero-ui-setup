@@ -65,7 +65,6 @@ export const SidebarTrigger = ({ className }: { className?: string }) => {
 
 export function Sidebar({ className }: { className?: string }) {
   const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar()
-  const pathname = usePathname()
 
   const toggleCollapse = () => setCollapsed(!collapsed)
 
@@ -78,7 +77,7 @@ export function Sidebar({ className }: { className?: string }) {
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <SidebarContent collapsed={false} pathname={pathname} onItemClick={() => setMobileOpen(false)} />
+        <SidebarContent collapsed={false} onItemClick={() => setMobileOpen(false)} />
       </div>
 
       {/* Desktop Sidebar */}
@@ -88,7 +87,7 @@ export function Sidebar({ className }: { className?: string }) {
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
         className={cn('border-sidebar-border sticky top-0 hidden h-screen flex-col border-r md:flex', className)}
       >
-        <SidebarContent collapsed={collapsed} pathname={pathname} toggleCollapse={toggleCollapse} />
+        <SidebarContent collapsed={collapsed} toggleCollapse={toggleCollapse} />
       </motion.aside>
 
       {/* Mobile Backdrop */}
@@ -105,17 +104,16 @@ export function Sidebar({ className }: { className?: string }) {
 // Separate component to share content between mobile and desktop
 function SidebarContent({
   collapsed,
-  pathname,
   toggleCollapse,
   onItemClick
 }: {
   collapsed: boolean
-  pathname: string
   toggleCollapse?: () => void
   onItemClick?: () => void
 }) {
   const { theme, setTheme } = useTheme()
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleAction = (key: React.Key) => {
     if (key === 'profile') {
@@ -139,7 +137,7 @@ function SidebarContent({
       {/* Header / Logo */}
       <div
         className={cn(
-          'border-sidebar-border/50 z-10 flex h-16 shrink-0 items-center border-b px-4',
+          'border-sidebar-border/50 z-10 flex h-14 shrink-0 items-center border-b px-4',
           collapsed ? 'justify-center' : 'justify-between'
         )}
       >
@@ -194,15 +192,16 @@ function SidebarContent({
                           collapsed ? 'mx-auto w-9 justify-center rounded-lg' : 'mx-1 rounded-md px-3',
 
                           // Hover state (only if not active to avoid conflict with layoutId bg)
-                          !isActive &&
-                            'hover:bg-sidebar-accent/50 text-sidebar-foreground/70 hover:text-sidebar-accent-foreground'
+                          !isActive
+                            ? 'hover:bg-sidebar-primary/50 text-sidebar-foreground/70 hover:text-sidebar-primary-foreground'
+                            : 'bg-sidebar-primary transition-all delay-100 duration-300'
                         )}
                       >
                         {/* Active Background Animation */}
                         {isActive && (
                           <motion.div
                             layoutId='activeSidebarItem'
-                            className='bg-sidebar-accent absolute inset-0 rounded-md shadow-sm'
+                            className='bg-sidebar-primary absolute inset-0 rounded-md shadow-sm'
                             initial={false}
                             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                           />
@@ -215,8 +214,8 @@ function SidebarContent({
                             className={cn(
                               'shrink-0 transition-colors duration-200',
                               isActive
-                                ? 'text-sidebar-primary'
-                                : 'text-sidebar-foreground/60 group-hover:text-sidebar-foreground'
+                                ? 'text-sidebar-primary-foreground'
+                                : 'text-sidebar-foreground/60 group-hover:text-sidebar-primary-foreground'
                             )}
                           />
                         </div>
@@ -231,7 +230,7 @@ function SidebarContent({
                               transition={{ duration: 0.2 }}
                               className={cn(
                                 'relative z-10 ml-3 overflow-hidden text-xs font-medium whitespace-nowrap',
-                                isActive ? 'text-sidebar-accent-foreground' : ''
+                                isActive ? 'text-sidebar-primary-foreground' : ''
                               )}
                             >
                               {item.label}
