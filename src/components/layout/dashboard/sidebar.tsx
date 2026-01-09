@@ -277,7 +277,7 @@ function SidebarContent({
 
       {/* Desktop Collapse Toggle */}
       {toggleCollapse && (
-        <div className='absolute top-11 -right-4 z-20 hidden md:block'>
+        <div className='absolute top-11 -right-3 z-20 hidden md:block'>
           <Button
             isIconOnly
             size='sm'

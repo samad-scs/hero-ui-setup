@@ -14,6 +14,7 @@ import {
 } from '@heroui/table'
 import { Pagination } from '@heroui/pagination'
 import { Spinner } from '@heroui/spinner'
+import { Card } from '@heroui/card'
 
 export interface DataTableColumn {
   name: string
@@ -46,16 +47,16 @@ export interface DataTableProps<T = unknown> {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function DataTable<T extends Record<string, any>>({
-  columns,
-  data,
-  totalRows,
-  isLoading,
-  pageIndex,
-  pageSize,
+  columns = [],
+  data = [],
+  totalRows = 0,
+  isLoading = false,
+  pageIndex = 0,
+  pageSize = 10,
   emptyPlaceholder = 'No data found',
-  onPageChange,
-  onSortChange,
-  onSelectionChange,
+  onPageChange = () => {},
+  onSortChange = () => {},
+  onSelectionChange = () => {},
   renderCell,
   selectionMode = 'none',
   color = 'primary',
@@ -71,18 +72,36 @@ export function DataTable<T extends Record<string, any>>({
   }
 
   return (
-    <div className='flex flex-col gap-4'>
+    <Card className='flex flex-col gap-4'>
       <Table
         aria-label='Data Table'
         classNames={{
           wrapper:
-            'max-w-[calc(100vw-30px)] p-0 md:max-w-full overflow-x-scroll! [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]'
+            'bg-transparent rounded-none border-0 shadow-none max-w-[calc(100vw-30px)] max-h-[68dvh] p-0 md:max-w-full overflow-x-scroll! [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]',
+          loadingWrapper: 'h-full!'
         }}
+        bottomContentPlacement='outside'
+        bottomContent={
+          totalPages > 1 ? (
+            <div className='flex w-full justify-end p-4'>
+              <Pagination
+                isCompact
+                showControls
+                showShadow
+                color={color}
+                page={pageIndex}
+                total={totalPages}
+                onChange={onPageChange}
+              />
+            </div>
+          ) : null
+        }
         isCompact
-        sortDescriptor={sortDescriptor}
+        isHeaderSticky
+        sortDescriptor={sortDescriptor || { column: 'id', direction: 'ascending' }}
         selectedKeys={selectionMode !== 'none' ? undefined : new Set([])}
-        selectionMode={selectionMode}
-        color={color}
+        selectionMode={selectionMode || 'single'}
+        color={color || 'default'}
         onSelectionChange={onSelectionChange}
         onSortChange={onSortChange}
       >
@@ -108,20 +127,6 @@ export function DataTable<T extends Record<string, any>>({
           )}
         </TableBody>
       </Table>
-
-      {totalPages > 1 ? (
-        <div className='flex w-full justify-center'>
-          <Pagination
-            isCompact
-            showControls
-            showShadow
-            color={color}
-            page={pageIndex}
-            total={totalPages}
-            onChange={onPageChange}
-          />
-        </div>
-      ) : null}
-    </div>
+    </Card>
   )
 }

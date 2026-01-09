@@ -7,7 +7,7 @@ import { Image } from '@heroui/image'
 export default function CardsComponent() {
   return (
     <div className='mx-auto grid max-w-[900px] grid-cols-12 grid-rows-2 gap-2 px-8 py-10 md:py-20'>
-      <Card className='col-span-12 h-[300px] sm:col-span-4'>
+      <Card className='bg-card col-span-12 h-[300px] sm:col-span-4'>
         <CardHeader className='absolute top-1 z-10 flex-col items-start!'>
           <p className='text-tiny font-bold text-white/60 uppercase'>What to watch</p>
           <h4 className='text-large font-medium text-white'>Stream the Acme event</h4>
@@ -19,7 +19,7 @@ export default function CardsComponent() {
           src='https://heroui.com/images/card-example-4.jpeg'
         />
       </Card>
-      <Card className='col-span-12 h-[300px] sm:col-span-4'>
+      <Card className='bg-card col-span-12 h-[300px] sm:col-span-4'>
         <CardHeader className='absolute top-1 z-10 flex-col items-start!'>
           <p className='text-tiny font-bold text-white/60 uppercase'>Plant a tree</p>
           <h4 className='text-large font-medium text-white'>Contribute to the planet</h4>
@@ -31,7 +31,7 @@ export default function CardsComponent() {
           src='https://heroui.com/images/card-example-3.jpeg'
         />
       </Card>
-      <Card className='col-span-12 h-[300px] sm:col-span-4'>
+      <Card className='bg-card col-span-12 h-[300px] sm:col-span-4'>
         <CardHeader className='absolute top-1 z-10 flex-col items-start!'>
           <p className='text-tiny font-bold text-white/60 uppercase'>Supercharged</p>
           <h4 className='text-large font-medium text-white'>Creates beauty like a beast</h4>
@@ -43,7 +43,7 @@ export default function CardsComponent() {
           src='https://heroui.com/images/card-example-2.jpeg'
         />
       </Card>
-      <Card isFooterBlurred className='col-span-12 h-[300px] w-full sm:col-span-5'>
+      <Card isFooterBlurred className='bg-card col-span-12 h-[300px] w-full sm:col-span-5'>
         <CardHeader className='absolute top-1 z-10 flex-col items-start'>
           <p className='text-tiny font-bold text-white/60 uppercase'>New</p>
           <h4 className='text-2xl font-medium text-black'>Acme camera</h4>
@@ -64,7 +64,7 @@ export default function CardsComponent() {
           </Button>
         </CardFooter>
       </Card>
-      <Card isFooterBlurred className='col-span-12 h-[300px] w-full sm:col-span-7'>
+      <Card isFooterBlurred className='bg-card col-span-12 h-[300px] w-full sm:col-span-7'>
         <CardHeader className='absolute top-1 z-10 flex-col items-start'>
           <p className='text-tiny font-bold text-white/60 uppercase'>Your day your way</p>
           <h4 className='text-xl font-medium text-white/90'>Your checklist for better sleep</h4>

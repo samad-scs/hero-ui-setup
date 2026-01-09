@@ -48,7 +48,7 @@ export const StatsCard = ({
   }
 
   return (
-    <Card className={cn('border-border w-full border shadow-sm transition-all hover:shadow-md', className)}>
+    <Card className={cn('bg-card border-border w-full border shadow-sm transition-all hover:shadow-md', className)}>
       <CardBody className='gap-4 p-5'>
         {/* Header: Title and Chip */}
         <div className='flex items-start justify-between'>

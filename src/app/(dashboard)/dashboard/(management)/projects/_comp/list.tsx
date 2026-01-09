@@ -124,7 +124,8 @@ export const ProjectList = () => {
             className='w-full sm:max-w-[44%]'
             placeholder='Search by name, code...'
             startContent={<SearchIcon size={16} />}
-            value={search}
+            value={search || ''}
+            defaultValue=''
             onClear={handleClearSearch}
             onValueChange={handleSearchChange}
           />
@@ -187,7 +188,7 @@ export const ProjectList = () => {
         pageSize={itemsPerPage}
         onPageChange={setPage}
         renderCell={renderCell}
-        selectionMode='multiple' // Or none if not needed
+        selectionMode='none' // Or none if not needed
         color='primary'
         uniqueKey='id'
       />
