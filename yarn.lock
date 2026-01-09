@@ -428,6 +428,18 @@
     "@react-types/form" "3.7.16"
     "@react-types/shared" "3.32.1"
 
+"@heroui/form@^2.1.29":
+  version "2.1.29"
+  resolved "https://registry.yarnpkg.com/@heroui/form/-/form-2.1.29.tgz#fdc22bb793398146ea001e2ef71622bf11be6fed"
+  integrity sha512-bWkd9SK+uuZN6gDVy/p9ccrpUryEjW4Y6y1EDaAsXYV8E9o/7JwIoWyZ0oxfskk1CS5TCHpKIYlb7mkdCeYmkA==
+  dependencies:
+    "@heroui/shared-utils" "2.1.12"
+    "@heroui/system" "2.4.25"
+    "@heroui/theme" "2.4.25"
+    "@react-stately/form" "3.2.2"
+    "@react-types/form" "3.7.16"
+    "@react-types/shared" "3.32.1"
+
 "@heroui/framer-utils@2.1.25":
   version "2.1.25"
   resolved "https://registry.npmjs.org/@heroui/framer-utils/-/framer-utils-2.1.25.tgz"
@@ -649,6 +661,22 @@
     "@react-types/table" "3.13.4"
     "@tanstack/react-virtual" "3.11.3"
 
+"@heroui/tabs@^2.2.26":
+  version "2.2.26"
+  resolved "https://registry.yarnpkg.com/@heroui/tabs/-/tabs-2.2.26.tgz#a9d24f925c9cebf9562683627e9519ddd3136550"
+  integrity sha512-RK5TjDI2KY1i/zyO/zzwkiDnQEYxcXSu9QCigNLcCZ6SXq0J3n83FC5Vv91kFwU9aTRuwdxIHv5KzV7D8Xe14w==
+  dependencies:
+    "@heroui/aria-utils" "2.2.26"
+    "@heroui/react-utils" "2.1.14"
+    "@heroui/shared-utils" "2.1.12"
+    "@heroui/use-is-mounted" "2.1.8"
+    "@react-aria/focus" "3.21.3"
+    "@react-aria/interactions" "3.26.0"
+    "@react-aria/tabs" "3.10.9"
+    "@react-stately/tabs" "3.8.7"
+    "@react-types/shared" "3.32.1"
+    scroll-into-view-if-needed "3.0.10"
+
 "@heroui/theme@2.4.25":
   version "2.4.25"
   resolved "https://registry.npmjs.org/@heroui/theme/-/theme-2.4.25.tgz"
@@ -771,6 +799,11 @@
   integrity sha512-2UKa4v1xbvFwerWKoMTrg4q9ZfP9MVIVfCl1a7JuKQlXq3jcyV6z1as5bZ41pCsTOT+wUVOFnlr6rzzQwT9ZOA==
   dependencies:
     "@react-aria/ssr" "3.9.10"
+
+"@heroui/use-is-mounted@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@heroui/use-is-mounted/-/use-is-mounted-2.1.8.tgz#8a42f8d99e3641d872c4013044d24449f48ca616"
+  integrity sha512-DO/Th1vD4Uy8KGhd17oGlNA4wtdg91dzga+VMpmt94gSZe1WjsangFwoUBxF2uhlzwensCX9voye3kerP/lskg==
 
 "@heroui/use-measure@2.1.8":
   version "2.1.8"
@@ -1366,6 +1399,20 @@
     "@react-types/table" "^3.13.4"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/tabs@3.10.9":
+  version "3.10.9"
+  resolved "https://registry.yarnpkg.com/@react-aria/tabs/-/tabs-3.10.9.tgz#81bdac133fe3bcf42091934217eaaa7ce99731d2"
+  integrity sha512-2+FNd7Ohr3hrEgYrKdZW0FWbgybzTVZft6tw95oQ2+9PnjdDVdtzHliI+8HY8jzb4hTf4bU7O8n+s/HBlCBSIw==
+  dependencies:
+    "@react-aria/focus" "^3.21.3"
+    "@react-aria/i18n" "^3.12.14"
+    "@react-aria/selection" "^3.27.0"
+    "@react-aria/utils" "^3.32.0"
+    "@react-stately/tabs" "^3.8.7"
+    "@react-types/shared" "^3.32.1"
+    "@react-types/tabs" "^3.3.20"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/textfield@3.18.3":
   version "3.18.3"
   resolved "https://registry.npmjs.org/@react-aria/textfield/-/textfield-3.18.3.tgz"
@@ -1552,6 +1599,16 @@
     "@react-types/table" "^3.13.4"
     "@swc/helpers" "^0.5.0"
 
+"@react-stately/tabs@3.8.7", "@react-stately/tabs@^3.8.7":
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/@react-stately/tabs/-/tabs-3.8.7.tgz#e9a915601337cd631bb309382db20871a473e9fb"
+  integrity sha512-ETZEzg7s9F2SCvisZ2cCpLx6XBHqdvVgDGU5l3C3s9zBKBr6lgyLFt61IdGW8XXZRUvw4mMGT6tGQbXeGvR0Wg==
+  dependencies:
+    "@react-stately/list" "^3.13.2"
+    "@react-types/shared" "^3.32.1"
+    "@react-types/tabs" "^3.3.20"
+    "@swc/helpers" "^0.5.0"
+
 "@react-stately/toast@3.1.2", "@react-stately/toast@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@react-stately/toast/-/toast-3.1.2.tgz#0502040b6bd57479eaba1bca2f4c66e9e957e55a"
@@ -1688,6 +1745,13 @@
   integrity sha512-I/DYiZQl6aNbMmjk90J9SOhkzVDZvyA3Vn3wMWCiajkMNjvubFhTfda5DDf2SgFP5l0Yh6TGGH5XumRv9LqL5Q==
   dependencies:
     "@react-types/grid" "^3.3.6"
+    "@react-types/shared" "^3.32.1"
+
+"@react-types/tabs@^3.3.20":
+  version "3.3.20"
+  resolved "https://registry.yarnpkg.com/@react-types/tabs/-/tabs-3.3.20.tgz#57c1563a6214298ce0ede8f160a625d92e3b0bcd"
+  integrity sha512-Kjq4PypapdMOVPAQgaFIKH65Kr3YnRvaxBGd6RYizTsqYImQhXoGj6B4lBpjYy4KhfRd4dYS82frHqTGKmBYiA==
+  dependencies:
     "@react-types/shared" "^3.32.1"
 
 "@react-types/textfield@3.12.6", "@react-types/textfield@^3.12.6":
